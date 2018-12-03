@@ -1,25 +1,36 @@
 <template>
   <section class="container">
-    <div class="card-grid-container">
-      <Card v-bind="{cost:'123', cardName:'First Card', cardBody:'Some explanations here'}" />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
+    <div v-if="cardList.length === 0">
+      <input id="input" type="file" @change="fileChosen">
     </div>
+    <div v-if="cardList.length > 0">
+      <div class="card-grid-container">
+        <div v-for="card in cardList" :key="card.name">
+          <Card v-bind="card" />
+        </div>
+      </div>
+    </div>
+
   </section>
 </template>
 
 <script>
 import Card from '~/components/Card.vue'
+import parse from 'csv-parse'
 
 export default {
   components: {
     Card
+  },
+
+  data() {
+    return { cardList: [] }
+  },
+
+  methods: {
+    fileChosen(e) {
+      console.log(e.target.files[0])
+    }
   }
 }
 </script>

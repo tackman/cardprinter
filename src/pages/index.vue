@@ -1,11 +1,18 @@
 <template>
   <section class="container">
     <div v-if="cardList.length === 0">
-      <input id="input" type="file" @change="fileChosen">
+      <input
+        id="input"
+        type="file"
+        @change="fileChosen"
+      >
     </div>
     <div v-if="cardList.length > 0">
       <div class="card-grid-container">
-        <div v-for="card in cardList" :key="card.name">
+        <div
+          v-for="card in cardList"
+          :key="card.name"
+        >
           <Card v-bind="card" />
         </div>
       </div>
@@ -29,7 +36,15 @@ export default {
 
   methods: {
     fileChosen(e) {
-      console.log(e.target.files[0])
+      const reader = new FileReader()
+      let f = e.target.files[0]
+      console.log(f)
+
+      reader.onload = function(e) {
+        console.log(reader.result)
+      }
+
+      reader.readAsText(f)
     }
   }
 }

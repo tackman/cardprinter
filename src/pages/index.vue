@@ -24,24 +24,42 @@
 <script>
 import Card from '~/components/Card.vue'
 import parse from 'csv-parse'
+import { mapMutations, mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
     Card
   },
 
-  data() {
-    return { cardList: [] }
+  computed: {
+    ...mapGetters({
+      cardList: 'cards/cardList'
+    })
   },
 
   methods: {
     fileChosen(e) {
+      const me = this
+      const output = []
       const reader = new FileReader()
       let f = e.target.files[0]
-      console.log(f)
 
       reader.onload = function(e) {
-        console.log(reader.result)
+        parse(reader.result, { skip_empty_lines: true })
+          .on('readable', function() {
+            let record
+            while ((record = this.read())) {
+              let card = {
+                const: record[0],
+                cardName: record[1],
+                cardBody: record[2]
+              }
+              output.push(card)
+            }
+          })
+          .on('end', function() {
+            me.$store.commit('cards/set', output)
+          })
       }
 
       reader.readAsText(f)

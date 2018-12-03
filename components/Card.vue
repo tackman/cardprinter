@@ -51,5 +51,6 @@ export default {
 
 .Card {
   margin: 0.5cm;
+  word-wrap: break-word;
 }
 </style>

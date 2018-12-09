@@ -50,7 +50,7 @@ export default {
             let record
             while ((record = this.read())) {
               let card = {
-                const: record[0],
+                cost: record[0],
                 cardName: record[1],
                 cardBody: record[2]
               }

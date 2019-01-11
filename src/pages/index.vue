@@ -82,7 +82,7 @@ export default {
   grid-template-columns: repeat(3, 33%);
   grid-template-rows: repeat(3, 33%);
   width: 21cm;
-  height: 29.7cm;
+  height: 28.7cm;
 }
 
 .title {
